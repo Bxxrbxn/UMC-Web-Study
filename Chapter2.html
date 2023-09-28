@@ -37,6 +37,7 @@
     </div>
 
     <script>
+
         document.getElementById('signup-form').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -45,20 +46,26 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
 
-            // 유효성 검사: 이메일 확인
-            const pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            if (pattern.test(email) == False) {
-                alert('올바른 이메일 형식이 아닙니다.');
+            const emailError = document.getElementById('emailError')
+            console.log(emailError);
+
+            // 유효성 검사: 비밀번호 형식 확인
+            const hasLetter = /[a-zA-Z]/.test(password) // 알파벳 포함 여부
+            const hasNumber = /[0-9]/.test(password)    // 숫자 포함 여부 
+            const hasSpecial = /[!@#$%^&*]/.test(password) // 특수문자 포함 여부
+            if (!hasLetter || !hasNumber || !hasSpecial || password.length() < 8) {
+                alert('영어+숫자+특수문자를 조합하여 8자 이상으로 작성해주세요.');
                 return;
             }
 
-            // 유효성 검사: 비밀번호 확인
+            // 유효성 검사: 비밀번호 일치 확인
             if (password !== confirmPassword) {
                 alert('비밀번호가 일치하지 않습니다.');
                 return;
             }
 
             // 가입 완료 창
+            console.log('가입 성공');
             alert('가입이 완료되었습니다!\n사용자 이름: ' + username + '\n이메일: ' + email);
         });
     </script>
